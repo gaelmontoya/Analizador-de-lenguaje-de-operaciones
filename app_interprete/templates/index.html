@@ -2,171 +2,128 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Autómatas 1</title>
-  <style>
-    /* ===== Reset general ===== */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', 'Segoe UI', sans-serif;
-    }
+    <meta charset="UTF-8">
+    <title>Automatas 1</title>
+    <style>
+        body {
+            font-family: "Segoe UI", Roboto, Arial, sans-serif;
+            background: linear-gradient(135deg, #8ec5fc, #e0c3fc);
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
 
-    /* ===== Fondo principal ===== */
-    body {
-      background: linear-gradient(135deg, #5b86e5, #36d1dc);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      color: #fff;
-      padding: 20px;
-    }
+        h1 {
+            font-size: 40px;
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            margin-bottom: 25px;
+        }
 
-    h1 {
-      font-size: 2.6rem;
-      letter-spacing: 1px;
-      margin-bottom: 30px;
-      text-align: center;
-      background: linear-gradient(90deg, #e0c3fc, #8ec5fc);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: fadeInDown 1s ease forwards;
-    }
+        .container {
+            background-color: #ffffff;
+            padding: 40px 45px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
 
-    /* ===== Caja principal ===== */
-    .container {
-      background: rgba(255, 255, 255, 0.15);
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      backdrop-filter: blur(10px);
-      border-radius: 18px;
-      padding: 40px 35px;
-      width: 100%;
-      max-width: 420px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-      animation: fadeInUp 0.8s ease forwards;
-    }
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
 
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-    }
+        label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            font-size: 15px;
+            margin-bottom: 6px;
+        }
 
-    label {
-      font-weight: 600;
-      font-size: 0.95rem;
-      color: #f0f0f0;
-      text-align: center;
-    }
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
 
-    input[type="number"] {
-      width: 100%;
-      padding: 12px;
-      border-radius: 10px;
-      border: none;
-      outline: none;
-      font-size: 1rem;
-      color: #333;
-      background: #fdfdfd;
-      transition: all 0.25s ease;
-    }
+        input[type="number"]:focus {
+            border-color: #7a42f4;
+            box-shadow: 0 0 6px rgba(122, 66, 244, 0.3);
+            outline: none;
+        }
 
-    input[type="number"]:focus {
-      box-shadow: 0 0 6px #8ec5fc;
-      background: #fff;
-    }
+        input[type="submit"] {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            color: white;
+            font-weight: 600;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            transition: transform 0.1s ease, opacity 0.3s ease;
+        }
 
-    /* ===== Botón principal ===== */
-    input[type="submit"] {
-      background: linear-gradient(90deg, #667eea, #764ba2);
-      color: white;
-      border: none;
-      padding: 12px 0;
-      border-radius: 10px;
-      font-weight: 600;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
+        input[type="submit"]:hover {
+            opacity: 0.9;
+        }
 
-    input[type="submit"]:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 20px rgba(118, 75, 162, 0.4);
-    }
+        input[type="submit"]:active {
+            transform: scale(0.98);
+        }
 
-    .result {
-      margin-top: 25px;
-      background: rgba(255, 255, 255, 0.15);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      padding: 15px;
-      border-radius: 10px;
-      text-align: left;
-      font-size: 0.95rem;
-      color: #e3f2fd;
-      animation: fadeIn 1s ease forwards;
-    }
+        .result {
+            margin-top: 25px;
+            background-color: #f3f0ff;
+            border: 1px solid #d3c7ff;
+            border-radius: 8px;
+            padding: 15px;
+            color: #4a2c9a;
+            font-size: 15px;
+            text-align: left;
+        }
 
-    .result strong {
-      color: #ffd166;
-    }
-
-    /* ===== Animaciones ===== */
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(25px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes fadeInDown {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    /* ===== Responsive ===== */
-    @media (max-width: 480px) {
-      .container {
-        padding: 25px 20px;
-      }
-      h1 {
-        font-size: 2.2rem;
-      }
-    }
-  </style>
+        .result strong {
+            color: #ff9f43;
+        }
+    </style>
 </head>
 
 <body>
-  <h1>Autómatas I</h1>
+    <h1>Autómatas 1</h1>
 
-  <div class="container">
-    <form action="{% url 'calcular' %}" method="post">
-      {% csrf_token %}
-      
-      <div class="form-group">
-        <label for="x">Primer número (X)</label>
-        <input type="number" id="x" name="x" required>
-      </div>
+    <div class="container">
+        <form method="post" action="">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="x">Primer número (X)</label>
+                <input type="number" id="x" name="x" required>
+            </div>
 
-      <div class="form-group">
-        <label for="y">Segundo número (Y)</label>
-        <input type="number" id="y" name="y" required>
-      </div>
+            <div class="form-group">
+                <label for="y">Segundo número (Y)</label>
+                <input type="number" id="y" name="y" required>
+            </div>
 
-      <input type="submit" value="Calcular">
-    </form>
+            <input type="submit" value="Calcular">
+        </form>
 
-    {% if resultado %}
-    <div class="result">
-      <p><strong>Multiplicación y suma +10 =</strong> {{ resultado.z }}</p>
-      <p><strong>X incrementado en 1 =</strong> {{ resultado.x }}</p>
+        {% if resultado %}
+        <div class="result">
+            <p><strong>Multiplicación y suma +10 =</strong> {{ resultado.z }}</p>
+            <p><strong>X incrementado en 1 =</strong> {{ resultado.x }}</p>
+        </div>
+        {% endif %}
     </div>
-    {% endif %}
-  </div>
 </body>
 </html>
